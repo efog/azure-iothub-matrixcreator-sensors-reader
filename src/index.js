@@ -6,7 +6,7 @@ let config = null;
 try {
     config = require("./config/config.json");
 } catch (error) {
-    console.log(`can't log config from folder, using dummy config`);
+    console.log(`can't load config from folder, using dummy config`);
     config = {
         "simulatedData": false,
         "interval": 2000,

@@ -31,8 +31,10 @@ class HumiditySensor {
         this._pingSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 1}`);
         this._pingSocket.send("");
         setInterval(() => {
+            console.log(`pinging keepalive humidity sensor port`);
             this._pingSocket.send("");
         }, 5000);
+
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
         this._errorSocket.subscribe("");
         this._errorSocket.on("message", function (errorMessage) {
@@ -41,6 +43,7 @@ class HumiditySensor {
         this._updateSocket.subscribe("");
         this._updateSocket.on("message", (buffer) => {
             const data = matrixIO.malos.v1.sense.Humidity.decode(buffer); 
+            console.log(`received message ${data}`);
             messageProcessor.state = { "humidity": data };
         });
     }
