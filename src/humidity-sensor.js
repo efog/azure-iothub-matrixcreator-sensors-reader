@@ -34,13 +34,14 @@ class HumiditySensor {
         this._pingSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 1}`);
         this._pingSocket.send("");
         setInterval(() => {
+            console.log(`sending to ping socket`);
             this._pingSocket.send("");
         }, 5000);
 
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
         this._errorSocket.subscribe("");
         this._errorSocket.on("message", function (errorMessage) {
-            console.log(`Error received: ${errorMessage.toString("utf8")}`);
+            console.error(`Error received: ${errorMessage.toString("utf8")}`);
         });
         this._updateSocket.subscribe("");
         this._updateSocket.on("message", (buffer) => {
