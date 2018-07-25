@@ -50,12 +50,12 @@ class AzureIotHubClient {
         this._client.on("message", (message) => {
             this.clientOnReceiveMessage(message);
         });
-        setInterval(() => {            
+        setInterval(() => {
             this._client.getTwin((error, twin) => {
                 if (error) {
                     console.error("get twin message error");
                     return;
-                }                
+                }
                 console.log(`Received twin config ${JSON.stringify(twin.properties)}`);
                 this._config.interval = twin.properties.desired.interval || this._config.interval;
             });
@@ -85,7 +85,7 @@ class AzureIotHubClient {
             }
         });
     }
-    initClient() {        
+    initClient() {
         console.log(`Using connection string ${this._connectionString}`);
         const connectionString = ConnectionString.parse(this._connectionString);
         const deviceId = connectionString.DeviceId;
@@ -127,6 +127,9 @@ class AzureIotHubClient {
         console.log('Starting...');
         this.client.open((err) => {
             this.clientOpened(err);
+        });
+        setTimeout(() => {
+            this.sendMessage();
         });
     }
 }
