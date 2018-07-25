@@ -118,7 +118,7 @@ class AzureIotHubClient {
         });
     }
     start() {
-        this._client.open((err) => {
+        this.client.open((err) => {
             this.clientOpened(err);
         });
     }
