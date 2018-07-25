@@ -1,4 +1,4 @@
-FROM node:10.7
+FROM arm32v7/node:10.7
 WORKDIR /usr/src/app
 COPY src/package*.json ./
 RUN npm install
