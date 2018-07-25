@@ -21,16 +21,19 @@ class AzureIotHubClient {
     constructor(connectionString, config) {
         this._client = null;
         this._config = config;
+        console.log(`running with config ${JSON.stringify(config)}`);
         this._connectionString = process.env.AzureIoTHubDeviceConnectionString || connectionString;
         this._messageId = 0;
     }
     get client() {
         if (!this._client) {
+            console.error('Creating instance of client...');
             this._client = this.initClient();
         }
         return this._client;
     }
     clientOpened(err) {
+        console.error(`Client opened`);
         if (err) {
             console.error(`[IoT hub Client] Connect error: ${err.message}`);
             return;
@@ -45,7 +48,8 @@ class AzureIotHubClient {
         this._client.on("message", (message) => {
             this.clientOnReceiveMessage(message);
         });
-        setInterval(() => {
+        setInterval(() => {            
+            console.error(`Client opened`);
             this._client.getTwin((error, twin) => {
                 if (error) {
                     console.error("get twin message error");
@@ -80,7 +84,8 @@ class AzureIotHubClient {
             }
         });
     }
-    initClient() {
+    initClient() {        
+        console.error(`Using connection string ${this._connectionString}`);
         const connectionString = ConnectionString.parse(this._connectionString);
         const deviceId = connectionString.DeviceId;
         const client = Client.fromConnectionString(this._connectionString, Protocol);
@@ -118,6 +123,7 @@ class AzureIotHubClient {
         });
     }
     start() {
+        console.error('Starting...');
         this.client.open((err) => {
             this.clientOpened(err);
         });
