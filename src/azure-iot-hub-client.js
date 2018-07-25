@@ -27,34 +27,36 @@ class AzureIotHubClient {
     }
     get client() {
         if (!this._client) {
-            console.error('Creating instance of client...');
+            console.log('Creating instance of client...');
             this._client = this.initClient();
         }
         return this._client;
     }
     clientOpened(err) {
-        console.error(`Client opened`);
+        console.log(`Client opened`);
         if (err) {
             console.error(`[IoT hub Client] Connect error: ${err.message}`);
             return;
         }
         // set C2D and device method callback
         this._client.onDeviceMethod("start", (request, response) => {
+            console.log(`Client started`);
             this.clientOnStart(request, response);
         });
         this._client.onDeviceMethod("stop", (request, response) => {
+            console.log(`Client stopped`);
             this.clientOnStop(request, response);
         });
         this._client.on("message", (message) => {
             this.clientOnReceiveMessage(message);
         });
         setInterval(() => {            
-            console.error(`Client opened`);
             this._client.getTwin((error, twin) => {
                 if (error) {
                     console.error("get twin message error");
                     return;
-                }
+                }                
+                console.log(`Received twin config ${JSON.stringify(twin.properties)}`);
                 this._config.interval = twin.properties.desired.interval || this._config.interval;
             });
         }, this._config.interval);
@@ -77,7 +79,6 @@ class AzureIotHubClient {
     clientOnStop(request, response) {
         console.log(`Try to invoke method stop (${request.payload})`);
         this._sendingMessage = false;
-
         response.send(200, "Successully stop sending message to cloud", function (err) {
             if (err) {
                 console.error(`[IoT hub Client] Failed sending a method response:\n ${err.message}`);
@@ -85,7 +86,7 @@ class AzureIotHubClient {
         });
     }
     initClient() {        
-        console.error(`Using connection string ${this._connectionString}`);
+        console.log(`Using connection string ${this._connectionString}`);
         const connectionString = ConnectionString.parse(this._connectionString);
         const deviceId = connectionString.DeviceId;
         const client = Client.fromConnectionString(this._connectionString, Protocol);
@@ -123,7 +124,7 @@ class AzureIotHubClient {
         });
     }
     start() {
-        console.error('Starting...');
+        console.log('Starting...');
         this.client.open((err) => {
             this.clientOpened(err);
         });

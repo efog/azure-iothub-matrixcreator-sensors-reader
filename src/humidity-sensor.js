@@ -9,6 +9,7 @@ const messageProcessor = require("./message-processor");
 
 class HumiditySensor {
     constructor() {
+        console.log(`setting up humidity sensor`);
         this._configSocket = zmq.socket("push");
         this._config = matrixIO.malos.v1.driver.DriverConfig.create({
             // Update rate configuration
@@ -49,4 +50,4 @@ class HumiditySensor {
         });
     }
 }
-module.exports = new HumiditySensor();
+module.exports = HumiditySensor;
