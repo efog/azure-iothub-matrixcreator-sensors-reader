@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "azure-iot-device": "^1.7.1",
+    "azure-iot-device-mqtt": "^1.7.1",
     "bluebird": "^3.5.1",
     "matrix-protos": "0.0.25",
     "zeromq": "^4.6.0"
