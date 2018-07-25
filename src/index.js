@@ -9,7 +9,7 @@ try {
     console.log(`can't load config from folder, using dummy config`);
     config = {
         "simulatedData": false,
-        "interval": 2000,
+        "interval": 20000,
         "deviceId": "Raspberry Pi Dev Node",
         "LEDPin": 5,
         "messageMax": 256,

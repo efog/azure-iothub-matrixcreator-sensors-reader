@@ -119,7 +119,9 @@ class AzureIotHubClient {
                 } else {
                     console.log('Message sent to Azure IoT Hub');
                 }
-                setTimeout(this._sendMessage, this._config.interval);
+                setTimeout(() => {
+                    this._sendMessage();
+                }, this._config.interval);
             });
         });
     }
@@ -127,9 +129,9 @@ class AzureIotHubClient {
         console.log('Starting...');
         this.client.open((err) => {
             this.clientOpened(err);
-        });
-        setTimeout(() => {
-            this.sendMessage();
+            setTimeout(() => {
+                this.sendMessage();
+            });
         });
     }
 }
