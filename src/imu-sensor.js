@@ -32,7 +32,6 @@ class ImuSensor {
         this._pingSocket.connect(`tcp://${matrixIP}:${matrixImuBasePort + 1}`);
         this._pingSocket.send("");
         setInterval(() => {
-            console.log(`sending to ping socket`);
             this._pingSocket.send("");
         }, 5000);
 
