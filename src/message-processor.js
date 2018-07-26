@@ -6,11 +6,9 @@ class MessageProcessor {
         return this._state;
     }
     set state(value) {        
-        console.log(`setting state ${JSON.stringify(value)}`);
         this._state = Object.assign({}, this.state, value);
     }
     getMessage(messageId, callback) {
-        console.log(`getting message`);
         const message = Object.assign({ "messageId": messageId }, this.state);
         callback(message);
     }
