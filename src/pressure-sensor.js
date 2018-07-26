@@ -11,15 +11,9 @@ class PressureSensor {
     constructor() {
         this._config = matrixIO.malos.v1.driver.DriverConfig.create({
             // Update rate configuration
-            "delayBetweenUpdates": 2.0,
-            "timeoutAfterLastPing": 6.0,
-            // Pressure configuration
-            "pressure": matrixIO.malos.v1.sense.PressureParams.create({
-                "currentTemperature": 25
-            })
+            "delayBetweenUpdates": 2.0, 
+            "timeoutAfterLastPing": 6.0, 
         });
-    }
-    connect() {
         
         this._configSocket = zmq.socket("push");
         this._pingSocket = zmq.socket("push");
