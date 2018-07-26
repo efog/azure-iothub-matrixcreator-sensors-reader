@@ -105,7 +105,7 @@ class AzureIotHubClient {
         return client;
     }
     sendMessage() {
-        if (!this._sendingMessage) {
+        if (this._sendingMessage) {
             return;
         }
         this._messageId++;

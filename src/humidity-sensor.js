@@ -53,7 +53,7 @@ class HumiditySensor {
         this._updateSocket.on("message", (buffer) => {
             const data = matrixIO.malos.v1.sense.Humidity.decode(buffer); 
             console.log(`received message ${data}`);
-            messageProcessor.state = { "humidity": data };
+            messageProcessor.state = data;
         });
     }
 }
