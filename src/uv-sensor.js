@@ -52,4 +52,4 @@ class UvSensor {
         });
     }
 }
-module.exports = UvSensor;
+module.exports = UvSensor; 
