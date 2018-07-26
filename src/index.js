@@ -2,6 +2,7 @@ const AzureIotHubClient = require("./azure-iot-hub-client");
 const HumiditySensor = require("./humidity-sensor");
 const ImuSensor = require("./imu-sensor");
 const PressureSensor = require("./pressure-sensor");
+const UvSensor = require("./uv-sensor");
 
 
 const connectionString = process.env.AzureIoTHubDeviceConnectionString;
@@ -30,9 +31,11 @@ const client = new AzureIotHubClient(connectionString, config);
 const humiditySensor = new HumiditySensor();
 const imuSensor = new ImuSensor();
 const pressureSensor = new PressureSensor();
+const uvSensor = new UvSensor();
 
 humiditySensor.connect();
 imuSensor.connect();
 pressureSensor.connect();
+uvSensor.connect();
 
 client.start();
