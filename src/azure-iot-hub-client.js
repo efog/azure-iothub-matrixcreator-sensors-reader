@@ -22,7 +22,7 @@ class AzureIotHubClient {
         this._client = null;
         this._config = config;
         console.log(`running with config ${JSON.stringify(config)}`);
-        this._connectionString = process.env.AzureIoTHubDeviceConnectionString || connectionString;
+        this._connectionString = connectionString;
         this._messageId = 0;
     }
     get client() {

@@ -5,29 +5,20 @@ const PressureSensor = require("./pressure-sensor");
 const UvSensor = require("./uv-sensor");
 
 
-const connectionString = process.env.AzureIoTHubDeviceConnectionString;
 let config = null;
 try {
     config = require("./config/config.json");
 } catch (error) {
     console.log(`can't load config from folder, using dummy config`);
     config = {
-        "simulatedData": false,
         "interval": 60000,
         "deviceId": "Raspberry Pi Dev Node",
-        "LEDPin": 5,
-        "messageMax": 256,
         "credentialPath": "~/.iot-hub",
-        "temperatureAlert": 30,
-        "i2cOption": {
-            "pin": 9,
-            "i2cBusNo": 1,
-            "i2cAddress": 119
-        }
+        "connectionString": null
     };
 }
 
-const client = new AzureIotHubClient(connectionString, config);
+const client = new AzureIotHubClient(config.connectionString || process.env.AzureIoTHubDeviceConnectionString, config);
 const humiditySensor = new HumiditySensor();
 const imuSensor = new ImuSensor();
 const pressureSensor = new PressureSensor();
