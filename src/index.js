@@ -1,5 +1,7 @@
 const AzureIotHubClient = require("./azure-iot-hub-client");
 const HumiditySensor = require("./humidity-sensor");
+const PressureSensor = require("./pressure-sensor");
+
 
 const connectionString = process.env.AzureIoTHubDeviceConnectionString;
 let config = null;
@@ -9,7 +11,7 @@ try {
     console.log(`can't load config from folder, using dummy config`);
     config = {
         "simulatedData": false,
-        "interval": 20000,
+        "interval": 60000,
         "deviceId": "Raspberry Pi Dev Node",
         "LEDPin": 5,
         "messageMax": 256,
@@ -25,7 +27,9 @@ try {
 
 const client = new AzureIotHubClient(connectionString, config);
 const humiditySensor = new HumiditySensor();
+const pressureSensor = new PressureSensor();
 
 humiditySensor.connect();
+pressureSensor.connect();
 
 client.start();
