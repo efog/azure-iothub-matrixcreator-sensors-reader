@@ -15,7 +15,7 @@ class HumiditySensor {
             "timeoutAfterLastPing": 6.0,
             // Humidity configuration
             "humidity": matrixIO.malos.v1.sense.HumidityParams.create({
-                "currentTemperature": 25
+                "currentTemperature": 30
             })
         });
     }
@@ -37,7 +37,7 @@ class HumiditySensor {
         this._pingSocket.send("");
         setInterval(() => {
             this._pingSocket.send("");
-        }, 5000);
+        }, 1000);
 
         console.log(`connecting humidity sensor error socket tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
