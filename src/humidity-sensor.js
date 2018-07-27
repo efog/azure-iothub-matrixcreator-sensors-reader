@@ -15,7 +15,7 @@ class HumiditySensor {
             "timeoutAfterLastPing": 6.0,
             // Humidity configuration
             "humidity": matrixIO.malos.v1.sense.HumidityParams.create({
-                "currentTemperature": 30
+                "currentTemperature": 24
             })
         });
     }
