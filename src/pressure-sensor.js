@@ -47,6 +47,7 @@ class PressureSensor {
         this._updateSocket.subscribe("");
         this._updateSocket.on("message", (buffer) => {
             const data = matrixIO.malos.v1.sense.Pressure.decode(buffer); 
+            delete data.temperature;
             messageProcessor.state = data;
         });
     }
