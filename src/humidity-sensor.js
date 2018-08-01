@@ -37,7 +37,7 @@ class HumiditySensor {
         this._pingSocket.send("");
         setInterval(() => {
             this._pingSocket.send("");
-        }, 500);
+        }, 5000);
 
         console.log(`connecting humidity sensor error socket tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixHumidityBasePort + 2}`);
