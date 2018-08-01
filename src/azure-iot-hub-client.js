@@ -56,7 +56,6 @@ class AzureIotHubClient {
                     console.error("get twin message error");
                     return;
                 }
-                console.log(`Received twin config ${JSON.stringify(twin.properties)}`);
                 this._config.interval = twin.properties.desired.interval || this._config.interval;
             });
         }, this._config.interval);
@@ -64,7 +63,6 @@ class AzureIotHubClient {
     clientOnReceiveMessage(msg) {
         const message = msg.getData().toString("utf-8");
         this._client.complete(msg, () => {
-            console.log(`Receive message: ${message}`);
         });
     }
     clientOnStart(request, response) {
