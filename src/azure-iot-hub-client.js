@@ -63,6 +63,7 @@ class AzureIotHubClient {
     clientOnReceiveMessage(msg) {
         const message = msg.getData().toString("utf-8");
         this._client.complete(msg, () => {
+            console.log(`received message: ${message}`);
         });
     }
     clientOnStart(request, response) {
