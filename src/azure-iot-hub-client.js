@@ -112,9 +112,9 @@ class AzureIotHubClient {
             message.properties.add('temperatureAlert', content.temperature > 27 ? 'true' : 'false');
             this._client.sendEvent(message, (err) => {
                 if (err) {
-                    console.error('Failed to send message to Azure IoT Hub');
+                    // console.error('Failed to send message to Azure IoT Hub');
                 } else {
-                    console.log('Message sent to Azure IoT Hub');
+                    // console.log('Message sent to Azure IoT Hub');
                 }
                 setTimeout(() => {
                     this.sendMessage();
