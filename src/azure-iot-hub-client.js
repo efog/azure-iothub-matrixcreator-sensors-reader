@@ -7,7 +7,7 @@ const info = dbg("INFO:athena.pi.iotclient:AzureIotHubClient");
 const Message = require("azure-iot-device").Message;
 const messageProcessor = require("./message-processor");
 const path = require("path");
-const Protocol = require("azure-iot-device-mqtt").Mqtt;
+const Protocol = require("azure-iot-device-amqp").Amqp;
 
 /**
  * Azure IOT Hub Client bootstrap class
