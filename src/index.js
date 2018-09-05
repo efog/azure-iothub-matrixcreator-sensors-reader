@@ -7,14 +7,6 @@ const fs = require("fs");
 
 let config = null;
 try {
-    const rootFiles = fs.readdirSync("./");
-    rootFiles.forEach((element) => {
-        console.log(element);
-    });
-    const configFiles = fs.readdirSync("./config");
-    configFiles.forEach((element) => {
-        console.log(element);
-    });
     config = require("./config/config.json");
 } catch (error) {
     console.error(error);
