@@ -104,13 +104,15 @@ class AzureIotHubClient {
         return client;
     }
     sendMessage() {
+        console.log("sending message initiated");
         if (this._sendingMessage) {
             return;
         }
         this._messageId++;
+        console.log(`Message id : ${this._messageId}`);
         messageProcessor.getMessage(this._messageId, (content) => {
             const message = new Message(JSON.stringify(content));
-            message.properties.add('temperatureAlert', content.temperature > 27 ? 'true' : 'false');
+            console.log(`Got message : ${message}`);
             this._client.sendEvent(message, (err) => {
                 if (err) {
                     console.error(`Send to IoT hub failed: ${JSON.stringify(err)}`);
