@@ -1,4 +1,8 @@
 // Set Initial constiables \\
+const dbg = require("debug");
+const error = dbg("ERROR:athena.pi.iotclient:PressureSensor");
+const info = dbg("INFO:athena.pi.iotclient:PressureSensor");
+
 const zmq = require("zeromq");
 const matrixIO = require("matrix-protos")["matrix_io"];
 
@@ -23,26 +27,26 @@ class PressureSensor {
         this._updateSocket = zmq.socket("sub");
 
         // Connect Pusher to Base port
-        console.log(`using pressure sensor configuration ${JSON.stringify(this._config)}`);
-        console.log(`connecting pressure sensor config socket tcp://${matrixIP}:${matrixPressureBasePort}`);
+        info(`using pressure sensor configuration ${JSON.stringify(this._config)}`);
+        info(`connecting pressure sensor config socket tcp://${matrixIP}:${matrixPressureBasePort}`);
         this._configSocket.connect(`tcp://${matrixIP}:${matrixPressureBasePort}`);
         this._configSocket.send(matrixIO.malos.v1.driver.DriverConfig.encode(this._config).finish());
 
-        console.log(`connecting pressure sensor ping socket tcp://${matrixIP}:${matrixPressureBasePort + 1}`);
+        info(`connecting pressure sensor ping socket tcp://${matrixIP}:${matrixPressureBasePort + 1}`);
         this._pingSocket.connect(`tcp://${matrixIP}:${matrixPressureBasePort + 1}`);
         this._pingSocket.send("");
         setInterval(() => {
             this._pingSocket.send("");
         }, 5000);
 
-        console.log(`connecting pressure sensor error socket tcp://${matrixIP}:${matrixPressureBasePort + 2}`);
+        info(`connecting pressure sensor error socket tcp://${matrixIP}:${matrixPressureBasePort + 2}`);
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixPressureBasePort + 2}`);
         this._errorSocket.subscribe("");
         this._errorSocket.on("message", function (errorMessage) {
-            console.error(`Error received: ${errorMessage.toString("utf8")}`);
+            error(`Error received: ${errorMessage.toString("utf8")}`);
         });
         
-        console.log(`connecting pressure sensor update socket tcp://${matrixIP}:${matrixPressureBasePort + 3}`);
+        info(`connecting pressure sensor update socket tcp://${matrixIP}:${matrixPressureBasePort + 3}`);
         this._updateSocket.connect(`tcp://${matrixIP}:${matrixPressureBasePort + 3}`);
         this._updateSocket.subscribe("");
         this._updateSocket.on("message", (buffer) => {

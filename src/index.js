@@ -3,14 +3,16 @@ const HumiditySensor = require("./humidity-sensor");
 const ImuSensor = require("./imu-sensor");
 const PressureSensor = require("./pressure-sensor");
 const UvSensor = require("./uv-sensor");
-const fs = require("fs");
+const dbg = require("debug");
+const error = dbg("ERROR:athena.pi.iotclient:Index");
+const info = dbg("INFO:athena.pi.iotclient:Index");
 
 let config = null;
 try {
     config = require("./config/config.json");
-} catch (error) {
-    console.error(error);
-    console.log(`can't load config from folder, using dummy config`);
+} catch (err) {
+    error(err);
+    info(`can't load config from folder, using dummy config`);
     config = {
         "interval": 60000,
         "deviceId": "Raspberry Pi Dev Node",

@@ -1,4 +1,8 @@
 // Set Initial constiables \\
+const dbg = require("debug");
+const error = dbg("ERROR:athena.pi.iotclient:ImuSensor");
+const info = dbg("INFO:athena.pi.iotclient:ImuSensor");
+
 const zmq = require("zeromq");
 const matrixIO = require("matrix-protos")["matrix_io"];
 
@@ -23,26 +27,26 @@ class ImuSensor {
         this._updateSocket = zmq.socket("sub");
 
         // Connect Pusher to Base port
-        console.log(`using imu sensor configuration ${JSON.stringify(this._config)}`);
-        console.log(`connecting imu sensor config socket tcp://${matrixIP}:${matrixImuBasePort}`);
+        info(`using imu sensor configuration ${JSON.stringify(this._config)}`);
+        info(`connecting imu sensor config socket tcp://${matrixIP}:${matrixImuBasePort}`);
         this._configSocket.connect(`tcp://${matrixIP}:${matrixImuBasePort}`);
         this._configSocket.send(matrixIO.malos.v1.driver.DriverConfig.encode(this._config).finish());
 
-        console.log(`connecting imu sensor ping socket tcp://${matrixIP}:${matrixImuBasePort + 1}`);
+        info(`connecting imu sensor ping socket tcp://${matrixIP}:${matrixImuBasePort + 1}`);
         this._pingSocket.connect(`tcp://${matrixIP}:${matrixImuBasePort + 1}`);
         this._pingSocket.send("");
         setInterval(() => {
             this._pingSocket.send("");
         }, 5000);
 
-        console.log(`connecting imu sensor error socket tcp://${matrixIP}:${matrixImuBasePort + 2}`);
+        info(`connecting imu sensor error socket tcp://${matrixIP}:${matrixImuBasePort + 2}`);
         this._errorSocket.connect(`tcp://${matrixIP}:${matrixImuBasePort + 2}`);
         this._errorSocket.subscribe("");
         this._errorSocket.on("message", function (errorMessage) {
-            console.error(`Error received: ${errorMessage.toString("utf8")}`);
+            error(`Error received: ${errorMessage.toString("utf8")}`);
         });
         
-        console.log(`connecting imu sensor update socket tcp://${matrixIP}:${matrixImuBasePort + 3}`);
+        info(`connecting imu sensor update socket tcp://${matrixIP}:${matrixImuBasePort + 3}`);
         this._updateSocket.connect(`tcp://${matrixIP}:${matrixImuBasePort + 3}`);
         this._updateSocket.subscribe("");
         this._updateSocket.on("message", (buffer) => {
