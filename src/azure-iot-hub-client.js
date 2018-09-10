@@ -53,15 +53,6 @@ class AzureIotHubClient {
         this._client.on("message", (message) => {
             this.clientOnReceiveMessage(message);
         });
-        setInterval(() => {
-            this._client.getTwin((twinError, twin) => {
-                if (twinError) {
-                    error("get twin message error");
-                    return;
-                }
-                this._config.interval = twin.properties.desired.interval || this._config.interval;
-            });
-        }, this._config.interval);
     }
     clientOnReceiveMessage(msg) {
         const message = msg.getData().toString("utf-8");
